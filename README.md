@@ -1,19 +1,19 @@
 Logging
 =======
 
-Logger using log4net.
+Logger using log4net or custom logger.
 
-#### Highlights:
+#### log4net logger:
 
 ```c#
 // Logger helper class.
 class Sample {
-	ILog log = Log.OfType<Sample>();
+	ILogger log = Log.OfType<Sample>();
 	// or 
-	ILog log = Log.Default; // calls OfType<Log>()
+	ILogger log = Log.Default; // calls Log.OfType<Log4NetLogger>() or configured logger
 }
 
-// Log class configures log4net.
+// Log4NetLogger class configures log4net.
 XmlConfigurator.Configure();
 ```
 
@@ -40,13 +40,13 @@ class Bar {
 	private static readonly ILog log = Log.OfType<Bar>();
 }
 class Baz {
-	// logger: Baz
+	// logger: rm.LoggingTestConsole.Baz
 	private static readonly ILog log = 
-		Log.OfType(MethodBase.GetCurrentMethod().DeclaringType.Name);
+		Log.OfType(MethodBase.GetCurrentMethod().DeclaringType);
 }
 class Qux {
-	// logger: rm.Logging.Log
-	private static readonly ILog log = Log.Default; // calls OfType<Log>()
+	// logger: rm.Logging.Log4NetLogger
+	private static readonly ILog log = Log.Default; // calls Log.OfType<Log4NetLogger>() or configured logger
 }
 ```
 
@@ -54,15 +54,30 @@ class Qux {
 // Log helper class initializes the logger with the Log type and wraps log4net methods. 
 class Xyzzy {
 	private void Debug() {
-		// logger: rm.Logging.Log
-		Log.Debug("some message"); // calls OfType<Log>()
+		// logger: rm.Logging.Log4NetLogger
+		Log.Debug("some message"); // calls Log.OfType<Log4NetLogger>() or configured logger
 	}
 }
 ```
 
-####Tips:
+#### Custom logger:
 
-######Configuration:
+```c#
+// Configure different logger if needed.
+class MyLogger : ILogger
+{
+	// todo: implement ILogger methods
+}
+```
+
+```c#
+// Add key in web/app config for logger's type name.
+<add key="logger" value="dev.Logging.MyLogger"/>
+```
+
+#### Tips:
+
+###### Configuration:
 
 Console project:
 - Look at `rm.LoggingTestConsole` project for configuration. Add the `AppConfig\log4net.config` file to your project and below in `app.config`.

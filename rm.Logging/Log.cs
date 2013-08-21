@@ -1,31 +1,36 @@
 ﻿using System;
-using log4net;
-using log4net.Config;
+using System.Collections.Specialized;
+using System.Configuration;
 
 namespace rm.Logging
 {
 	/// <summary>
 	/// Logger helper class.
 	/// </summary>
-	public class Log
+	public static class Log
 	{
 		#region members
-		/// <summary>
-		/// Logger for default type.
-		/// </summary>
-		private static ILog log { get; set; }
 		/// <summary>
 		/// Separator string.
 		/// </summary>
 		private static readonly string separator = ": ";
-		#endregion
-
-		#region ctors
-		static Log()
+		private static ILogger log = GetLoggerFromConfig();
+		private static ILogger GetLoggerFromConfig()
 		{
-			// configures log4net using config
-			XmlConfigurator.Configure();
-			log = OfType<Log>();
+			ILogger logger;
+			try
+			{
+				var loggingSection = (NameValueCollection)ConfigurationManager.GetSection("Logging");
+				var typeName = loggingSection["logger"];
+				var type = Type.GetType(typeName);
+				logger = (ILogger)Activator.CreateInstance(type);
+				return logger;
+			}
+			catch
+			{
+				logger = OfType<Log4NetLogger>();
+			}
+			return logger;
 		}
 		#endregion
 
@@ -33,23 +38,23 @@ namespace rm.Logging
 		/// <summary>
 		/// Default logger type.
 		/// </summary>
-		public static ILog Default
+		public static ILogger Default
 		{
 			get { return log; }
 		}
 		/// <summary>
 		/// Get logger for type <paramref name="T"/>.
 		/// </summary>
-		public static ILog OfType<T>()
+		public static ILogger OfType<T>()
 		{
-			return LogManager.GetLogger(typeof(T));
+			return OfType(typeof(T));
 		}
 		/// <summary>
 		/// Get logger for type.
 		/// </summary>
-		public static ILog OfType(string type)
+		public static ILogger OfType(Type type)
 		{
-			return LogManager.GetLogger(type);
+			return new Log4NetLogger(type);
 		}
 		#endregion
 
