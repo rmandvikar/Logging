@@ -1,14 +1,13 @@
-﻿using log4net;
-using rm.Logging;
+﻿using rm.Logging;
 
 namespace rm.LoggingTestConsole
 {
     /// <summary>
-    /// Uses default type logger.
+    /// Uses Log4Net's default type logger.
     /// </summary>
     class Qux
     {
-        private static readonly ILog log = Log.Default;
+        private static readonly ILogger log = Log.Default;
         public void Start()
         {
             new Common(log).Start();

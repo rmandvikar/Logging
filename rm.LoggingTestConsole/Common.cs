@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using log4net;
+using rm.Logging;
 
 namespace rm.LoggingTestConsole
 {
@@ -10,8 +10,8 @@ namespace rm.LoggingTestConsole
     class Common
     {
         public const int count = 1;
-        ILog log;
-        public Common(ILog log)
+        ILogger log;
+        public Common(ILogger log)
         {
             this.log = log;
         }
