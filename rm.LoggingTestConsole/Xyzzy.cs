@@ -36,6 +36,7 @@ namespace rm.LoggingTestConsole
             catch (Exception ex)
             {
                 Log.Error("Error message", ex);
+                Log.Error("Error()", "Additional message");
             }
         }
         private void Fatal()
@@ -47,6 +48,7 @@ namespace rm.LoggingTestConsole
             catch (Exception ex)
             {
                 Log.Fatal("Fatal message", ex);
+                Log.Fatal("Fatal()", "Additional message");
             }
         }
         private void Throw()

@@ -14,6 +14,10 @@ namespace rm.Logging
         /// Logger for default type.
         /// </summary>
         private static ILog log { get; set; }
+        /// <summary>
+        /// Separator string.
+        /// </summary>
+        private static readonly string separator = ": ";
         #endregion
 
         #region ctors
@@ -60,6 +64,10 @@ namespace rm.Logging
         {
             log.Debug(message, exception);
         }
+        public static void Debug(object message1, object message2)
+        {
+            log.DebugFormat("{0}{1}{2}", message1, separator, message2);
+        }
         public static void DebugFormat(string format, params object[] args)
         {
             log.DebugFormat(format, args);
@@ -79,6 +87,10 @@ namespace rm.Logging
         public static void Info(object message, Exception exception)
         {
             log.Info(message, exception);
+        }
+        public static void Info(object message1, object message2)
+        {
+            log.InfoFormat("{0}{1}{2}", message1, separator, message2);
         }
         public static void InfoFormat(string format, params object[] args)
         {
@@ -100,6 +112,10 @@ namespace rm.Logging
         {
             log.Warn(message, exception);
         }
+        public static void Warn(object message1, object message2)
+        {
+            log.WarnFormat("{0}{1}{2}", message1, separator, message2);
+        }
         public static void WarnFormat(string format, params object[] args)
         {
             log.WarnFormat(format, args);
@@ -120,6 +136,10 @@ namespace rm.Logging
         {
             log.Error(message, exception);
         }
+        public static void Error(object message1, object message2)
+        {
+            log.ErrorFormat("{0}{1}{2}", message1, separator, message2);
+        }
         public static void ErrorFormat(string format, params object[] args)
         {
             log.ErrorFormat(format, args);
@@ -139,6 +159,10 @@ namespace rm.Logging
         public static void Fatal(object message, Exception exception)
         {
             log.Fatal(message, exception);
+        }
+        public static void Fatal(object message1, object message2)
+        {
+            log.FatalFormat("{0}{1}{2}", message1, separator, message2);
         }
         public static void FatalFormat(string format, params object[] args)
         {
