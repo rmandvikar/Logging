@@ -26,6 +26,7 @@ XmlConfigurator.Configure();
 // log4net file appenders:
 "default-rolling": 10 files, 2MB each
 "per-execution-rolling": file per program execution, 10 files max
+"smtp": email immediately when fatal event occurs (no events buffered)
 ```
 
 ```c#
