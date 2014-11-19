@@ -13,8 +13,8 @@ class Sample {
 	ILogger log = Log.Default; // calls Log.OfType<Log4NetLogger>() or configured logger
 }
 
-// Log4NetLogger class configures log4net.
-XmlConfigurator.Configure();
+// Log4NetLogger class configures log4net. It also watches the log4net config file for changes at runtime.
+XmlConfigurator.ConfigureAndWatch(configFile);
 ```
 
 ```c#
@@ -81,6 +81,17 @@ class MyLogger : ILogger
 
 Console project:
 - Look at `rm.LoggingTestConsole` project for configuration. Add the `AppConfig\log4net.config` file to your project and below in `app.config`.
+```c#
+<configuration>
+	<configSections>
+		<section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
+	</configSections>
+	<log4net configSource="AppConfig\log4net.config" />
+</configuration>
+```
+
+Web project:
+- Look at `rm.LoggingTestWeb` project for configuration. Add the `AppConfig\log4net.config` file to your project and below in `web.config`.
 ```c#
 <configuration>
 	<configSections>
