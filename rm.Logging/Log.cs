@@ -58,6 +58,13 @@ namespace rm.Logging
         }
         #endregion
 
+        #region test methods
+        public static string GetLog4NetSectionConfigSourceValue()
+        {
+            return Log4NetLogger.GetLog4NetSectionConfigSourceValue();
+        }
+        #endregion
+
         #region wrapper methods
 
         #region Debug

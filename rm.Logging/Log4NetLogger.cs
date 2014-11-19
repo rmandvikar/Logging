@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Configuration;
 using log4net;
 using log4net.Config;
 
@@ -17,7 +22,7 @@ namespace rm.Logging
         // static ctor
         static Log4NetLogger()
         {
-            XmlConfigurator.Configure();
+            XmlConfigurator.ConfigureAndWatch(new FileInfo(GetConfigFile()));
         }
         // ctors
         public Log4NetLogger()
@@ -26,6 +31,105 @@ namespace rm.Logging
         public Log4NetLogger(Type type)
         {
             log = LogManager.GetLogger(type);
+        }
+        #endregion
+
+        #region configSections methods
+        /// <summary>
+        /// Returns path of the log4net config file.
+        /// </summary>
+        private static string GetConfigFile()
+        {
+            var configSourceValue = GetLog4NetSectionConfigSourceValue();
+            var log4netConfigPath = GetLog4NetConfigFilePath(configSourceValue);
+            return log4netConfigPath;
+        }
+        /// <summary>
+        /// Returns log4net configSection's configSource value, ex: "AppConfig\log4net.config"
+        /// </summary>
+        public static string GetLog4NetSectionConfigSourceValue()
+        {
+            //return @"AppConfig\log4net.config";
+            var config = GetConfiguration();
+            var log4netSection = GetLog4NetConfigurationSection(config);
+            if (log4netSection == null)
+            {
+                throw new ApplicationException("log4net configSection is not present in web/app config.");
+            }
+            var configSourceValue = log4netSection.SectionInformation.ConfigSource;
+            if (string.IsNullOrWhiteSpace(configSourceValue))
+            {
+                throw new ApplicationException("log4net configSection's configSource value is not specified in web/app config.");
+            }
+            return configSourceValue;
+        }
+        private static Configuration GetConfiguration()
+        {
+            if (HttpContext.Current == null)
+            {
+                // console application
+                return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            }
+            else
+            {
+                // web application
+                return WebConfigurationManager.OpenWebConfiguration("~");
+            }
+        }
+        private static ConfigurationSection GetLog4NetConfigurationSection(
+            Configuration config)
+        {
+            return GetLog4NetConfigurationSection(config.Sections)
+                ?? GetLog4NetConfigurationSection(config.SectionGroups);
+        }
+        private static ConfigurationSection GetLog4NetConfigurationSection(
+            ConfigurationSectionCollection sections)
+        {
+            var localSections = sections.Cast<ConfigurationSection>()
+                .Where(s => s.SectionInformation.IsDeclared);
+            var log4netSection = localSections
+                .Where(s => s.SectionInformation.Type.Contains("Log4NetConfigurationSectionHandler"))
+                .SingleOrDefault();
+            return log4netSection;
+        }
+        private static ConfigurationSection GetLog4NetConfigurationSection(
+            ConfigurationSectionGroupCollection sectionGroups)
+        {
+            ConfigurationSection log4netSection = null;
+            foreach (ConfigurationSectionGroup sectionGroup in sectionGroups)
+            {
+                log4netSection = GetLog4NetConfigurationSection(sectionGroup.Sections);
+                if (log4netSection != null)
+                {
+                    break;
+                }
+                log4netSection = GetLog4NetConfigurationSection(sectionGroup.SectionGroups);
+                if (log4netSection != null)
+                {
+                    break;
+                }
+            }
+            return log4netSection;
+        }
+        private static string GetLog4NetConfigFilePath(string configSourceValue)
+        {
+            string configPath = "";
+            // File.Exists(path) test does not work for all scenarios
+            if (HttpContext.Current == null)
+            {
+                // console application
+                configPath = configSourceValue;
+            }
+            else
+            {
+                // web application
+                configPath = HttpContext.Current.Server.MapPath(configSourceValue);
+            }
+            if (string.IsNullOrWhiteSpace(configPath))
+            {
+                throw new ApplicationException("log4net config file does not exist.");
+            }
+            return configPath;
         }
         #endregion
 
