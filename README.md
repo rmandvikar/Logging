@@ -25,6 +25,7 @@ XmlConfigurator.ConfigureAndWatch(configFile);
 ```c#
 // log4net file appenders:
 "default-rolling": 10 files, 2MB each
+"rolling-by-date": file per date (note: max files when rolling by date not yet supported by log4net)
 "per-execution-rolling": file per program execution, 10 files max
 "smtp": email immediately when fatal event occurs (no events buffered)
 ```
@@ -81,6 +82,7 @@ class MyLogger : ILogger
 
 Console project:
 - Look at `rm.LoggingTestConsole` project for configuration. Add the `AppConfig\log4net.config` file to your project and below in `app.config`.
+- Include/Exclude the appenders in `log4net.config`.
 ```c#
 <configuration>
   <configSections>
@@ -92,6 +94,7 @@ Console project:
 
 Web, MVC project:
 - Look at `rm.LoggingTestWeb` or `rm.LoggingTestMvc` project for configuration. Add the `AppConfig\log4net.config` file to your project and below in `web.config`.
+- Include/Exclude the appenders in `log4net.config`.
 ```c#
 <configuration>
   <configSections>
