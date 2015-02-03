@@ -28,6 +28,7 @@ XmlConfigurator.ConfigureAndWatch(configFile);
 "rolling-by-date": file per date, 10 files, 2MB each
 "per-execution-rolling": file per program execution, 10 files max
 "smtp": email immediately when fatal event occurs (no events buffered)
+"filter-by-logger": filter logs by matching logger name
 ```
 
 ```c#
