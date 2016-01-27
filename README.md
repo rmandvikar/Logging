@@ -59,3 +59,18 @@ class Xyzzy {
     }
 }
 ```
+
+####Tips:
+
+######Configuration:
+
+Console project:
+- Look at `rm.LoggingTestConsole` project for configuration. Add the `AppConfig\log4net.config` file to your project and below in `app.config`.
+```c#
+<configuration>
+  <configSections>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
+  </configSections>
+  <log4net configSource="AppConfig\log4net.config" />
+</configuration>
+```
