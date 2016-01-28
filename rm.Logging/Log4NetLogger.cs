@@ -122,8 +122,8 @@ namespace rm.Logging
 			}
 			else
 			{
-				// web application
-				configPath = HttpContext.Current.Server.MapPath(configSourceValue);
+				// web, mvc application
+				configPath = HttpContext.Current.Server.MapPath("~/" + configSourceValue);
 			}
 			if (string.IsNullOrWhiteSpace(configPath))
 			{

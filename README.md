@@ -90,8 +90,8 @@ Console project:
 </configuration>
 ```
 
-Web project:
-- Look at `rm.LoggingTestWeb` project for configuration. Add the `AppConfig\log4net.config` file to your project and below in `web.config`.
+Web, MVC project:
+- Look at `rm.LoggingTestWeb` or `rm.LoggingTestMvc` project for configuration. Add the `AppConfig\log4net.config` file to your project and below in `web.config`.
 ```c#
 <configuration>
 	<configSections>

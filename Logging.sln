@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rm.LoggingTestWeb", "rm.LoggingTestWeb\rm.LoggingTestWeb.csproj", "{4E234678-0A19-4DCD-8BF9-7B16E3977897}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rm.LoggingTestMvc", "rm.LoggingTestMvc\rm.LoggingTestMvc.csproj", "{4B21F703-A9AB-4609-ABB6-6CFE97EE77E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{4E234678-0A19-4DCD-8BF9-7B16E3977897}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E234678-0A19-4DCD-8BF9-7B16E3977897}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E234678-0A19-4DCD-8BF9-7B16E3977897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B21F703-A9AB-4609-ABB6-6CFE97EE77E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B21F703-A9AB-4609-ABB6-6CFE97EE77E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B21F703-A9AB-4609-ABB6-6CFE97EE77E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B21F703-A9AB-4609-ABB6-6CFE97EE77E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
