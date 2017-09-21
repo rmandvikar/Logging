@@ -3,7 +3,7 @@ Logging
 
 Logger using log4net.
 
-####Highlights:
+#### Highlights:
 
 ```c#
 // Logger helper class.
