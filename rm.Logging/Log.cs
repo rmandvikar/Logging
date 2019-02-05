@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
-using System.Configuration;
 
 namespace rm.Logging
 {
@@ -17,20 +15,7 @@ namespace rm.Logging
 		private static ILogger log = GetLoggerFromConfig();
 		private static ILogger GetLoggerFromConfig()
 		{
-			ILogger logger;
-			try
-			{
-				var loggingSection = (NameValueCollection)ConfigurationManager.GetSection("Logging");
-				var typeName = loggingSection["logger"];
-				var type = Type.GetType(typeName);
-				logger = (ILogger)Activator.CreateInstance(type);
-				return logger;
-			}
-			catch
-			{
-				logger = OfType<Log4NetLogger>();
-			}
-			return logger;
+			return OfType<Log4NetLogger>();
 		}
 		#endregion
 

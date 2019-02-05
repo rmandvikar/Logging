@@ -8,10 +8,10 @@ namespace rm.LoggingTestConsole
 	{
 		static void Main(string[] args)
 		{
-			//LoggingTest();
+			LoggingTest();
 
 			Log4NetConfigChangeAtRuntimeTest();
-			//GetConfigSectionConfigSourceTest();
+			GetConfigSectionConfigSourceTest();
 		}
 
 		private static void LoggingTest()

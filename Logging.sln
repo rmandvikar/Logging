@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rm.Logging", "rm.Logging\rm.Logging.csproj", "{F19E6662-9380-4B3C-B9A3-43AE44AFCA7B}"
 EndProject
@@ -15,13 +15,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rm.LoggingTestWeb", "rm.LoggingTestWeb\rm.LoggingTestWeb.csproj", "{4E234678-0A19-4DCD-8BF9-7B16E3977897}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rm.LoggingTestMvc", "rm.LoggingTestMvc\rm.LoggingTestMvc.csproj", "{4B21F703-A9AB-4609-ABB6-6CFE97EE77E7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assemblies", "Assemblies", "{0195035A-2D30-480D-8DD6-06164B7748E1}"
-	ProjectSection(SolutionItems) = preProject
-		Assemblies\log4net.dll = Assemblies\log4net.dll
-		Assemblies\log4net.pdb = Assemblies\log4net.pdb
-		Assemblies\log4net.xml = Assemblies\log4net.xml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppConfig", "AppConfig", "{71644FEC-3C84-4538-BA54-99DE30AABB84}"
 	ProjectSection(SolutionItems) = preProject
@@ -55,7 +48,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0195035A-2D30-480D-8DD6-06164B7748E1} = {36A55F2F-8019-4F84-95FB-DD5C767C7C95}
 		{71644FEC-3C84-4538-BA54-99DE30AABB84} = {36A55F2F-8019-4F84-95FB-DD5C767C7C95}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE656F9A-EE21-4FBF-9F41-A7132A44D8EC}
 	EndGlobalSection
 EndGlobal

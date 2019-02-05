@@ -2,8 +2,7 @@
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Configuration;
+using System.Reflection;
 using log4net;
 using log4net.Config;
 
@@ -22,7 +21,11 @@ namespace rm.Logging
 		// static ctor
 		static Log4NetLogger()
 		{
-			XmlConfigurator.ConfigureAndWatch(new FileInfo(GetConfigFile()));
+			var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+			// current working dir is project dir instead of {project}/bin/Debug dir
+			// see bug: https://github.com/dotnet/project-system/issues/589
+			var path = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), GetConfigFile());
+			XmlConfigurator.ConfigureAndWatch(logRepository, new FileInfo(path));
 		}
 		// ctors
 		public Log4NetLogger()
@@ -65,16 +68,7 @@ namespace rm.Logging
 		}
 		private static Configuration GetConfiguration()
 		{
-			if (HttpContext.Current == null)
-			{
-				// console application
-				return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-			}
-			else
-			{
-				// web application
-				return WebConfigurationManager.OpenWebConfiguration("~");
-			}
+			return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 		}
 		private static ConfigurationSection GetLog4NetConfigurationSection(
 			Configuration config)
@@ -113,23 +107,7 @@ namespace rm.Logging
 		}
 		private static string GetLog4NetConfigFilePath(string configSourceValue)
 		{
-			string configPath = "";
-			// File.Exists(path) test does not work for all scenarios
-			if (HttpContext.Current == null)
-			{
-				// console application
-				configPath = configSourceValue;
-			}
-			else
-			{
-				// web, mvc application
-				configPath = HttpContext.Current.Server.MapPath("~/" + configSourceValue);
-			}
-			if (string.IsNullOrWhiteSpace(configPath))
-			{
-				throw new ApplicationException("log4net config file does not exist.");
-			}
-			return configPath;
+			return configSourceValue;
 		}
 		#endregion
 
